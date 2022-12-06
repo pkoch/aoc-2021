@@ -2,7 +2,7 @@ import { assertEquals } from "https://deno.land/std@0.167.0/testing/asserts.ts";
 import { max, transpose } from "../libtapete.ts";
 
 import a1, { applyLine, Board, decode, horizontalOrVertical } from "./1.ts";
-// import a2 from "./2.ts";
+import a2 from "./2.ts";
 
 const exampleLines = decode(`
 0,9 -> 5,9
@@ -127,9 +127,9 @@ Deno.test({
   },
 });
 
-// Deno.test({
-//   name: "2",
-//   fn() {
-//     assertEquals(a2, 13884);
-//   },
-// });
+Deno.test({
+  name: "2",
+  fn() {
+    assertEquals(a2, 16793);
+  },
+});

@@ -77,11 +77,10 @@ export const countDangerous = (b: Board): number =>
     .filter((v) => v >= 2)
     .length;
 
-const map = decode(await input_reader(import.meta.resolve))
+const a = decode(await input_reader(import.meta.resolve))
   .filter(horizontalOrVertical)
-  .reduce(applyLine, {});
-
-const a = countDangerous(map);
+  .reduce(applyLine, {})
+  .thrush(countDangerous);
 
 export default a;
 
