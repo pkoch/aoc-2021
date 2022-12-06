@@ -1,14 +1,5 @@
 import { assertNever, input_reader } from "../libtapete.ts";
-
-declare global {
-  interface Object {
-    thrush: <T, U>(this: T, fn: (self: T) => U) => U;
-  }
-}
-
-Object.prototype.thrush = function <T, U>(this: T, fn: (self: T) => U): U {
-  return fn(this);
-};
+import "../langExts/Object/thrush.ts";
 
 const directions = [
   "forward",
@@ -59,7 +50,7 @@ const a = (await input_reader(import.meta.resolve))
   .split("\n")
   .map(decodeMovement)
   .reduce(applyMovement, { depth: 0, horizontal: 0 })
-  .thrush((pos) => pos.depth * pos.horizontal);
+  .thrush((_) => _.depth * _.horizontal);
 
 export default a;
 

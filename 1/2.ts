@@ -1,17 +1,5 @@
 import { input_reader } from "../libtapete.ts";
-
-declare global {
-  interface Array<T> {
-    windows: (size: number) => T[][];
-  }
-}
-
-Array.prototype.windows = function <T>(this: T[], size: number): T[][] {
-  return Array.from(
-    { length: this.length - size + 1 },
-    (_, i) => this.slice(i, i + size),
-  );
-};
+import "../langExts/Array/windows.ts";
 
 const add = (a: number, b: number): number => a + b;
 
