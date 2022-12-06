@@ -1,6 +1,7 @@
 import { assertNever, input_reader, transpose } from "../libtapete.ts";
 import "../langExts/Array/any.ts";
 import "../langExts/Array/all.ts";
+import "../langExts/Array/partition.ts";
 
 export type Board = (number | null)[][];
 
@@ -15,16 +16,17 @@ export const withMarked = (board: Board, n: number): Board => {
 export const playUntilWin = (
   boards: Board[],
   balls: number[],
-): [Board, number] => {
+): [Board[], number, Board[], number[]] => {
   while (true) {
     if (!balls.length) throw assertNever({ balls });
-
     const ball = balls.shift()!;
 
-    boards = boards.map((b) => withMarked(b, ball));
-    const winnerBoards = boards.filter(isWinner);
-    if(![0,1].includes(winnerBoards.length)) return assertNever({winnerBoards, ball})
-    if (winnerBoards.length) return [winnerBoards[0], ball];
+    let winners;
+    [winners, boards] = boards
+      .map((b) => withMarked(b, ball))
+      .partition(isWinner);
+
+    if (winners.length) return [winners, ball, boards, balls];
   }
 };
 
@@ -34,18 +36,22 @@ export const score = (board: Board, ball: number): number => {
   ) * ball;
 };
 
-const [ballsS, ...boardsS] = (await input_reader(import.meta.resolve))
-  .trim()
-  .split("\n\n");
+export const decode = (s: string): [number[], Board[]] => {
+  const [ballsS, ...boardsS] = s.trim().split("\n\n");
 
-const balls: number[] = ballsS.split(",").map((bS) => +new Number(bS));
-const boards: Board[] = boardsS.map((bS) =>
-  bS.split("\n").map((lS) =>
-    lS.split(" ").filter((s) => s).map((cS) => +new Number(cS))
-  )
-);
+  const balls: number[] = ballsS.split(",").map((bS) => +new Number(bS));
+  const boards: Board[] = boardsS.map((bS) =>
+    bS.split("\n").map((lS) =>
+      lS.split(" ").filter((s) => s).map((cS) => +new Number(cS))
+    )
+  );
 
-const [winner, ball] = playUntilWin(boards, balls);
+  return [balls, boards];
+};
+
+const [balls, boards] = decode(await input_reader(import.meta.resolve));
+
+const [[winner], ball] = playUntilWin(boards, balls);
 
 const a = score(winner, ball);
 

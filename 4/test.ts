@@ -1,7 +1,7 @@
 import { assertEquals } from "https://deno.land/std@0.167.0/testing/asserts.ts";
 
 import a1, { isWinner, playUntilWin, score, withMarked } from "./1.ts";
-// import a2 from "./2.ts";
+import a2 from "./2.ts";
 
 const boardUnfilled = [
   [1, 2],
@@ -82,7 +82,7 @@ Deno.test({
       [22, 11, 13, 6, 5],
       [2, 0, 12, 3, 7],
     ]];
-    const [winner, ball] = playUntilWin(boards, balls);
+    const [[winner], ball] = playUntilWin(boards, balls);
     assertEquals(score(winner, ball), 4512);
   },
 });
@@ -94,9 +94,9 @@ Deno.test({
   },
 });
 
-// Deno.test({
-//   name: "2",
-//   fn() {
-//     assertEquals(a2, 482500);
-//   },
-// });
+Deno.test({
+  name: "2",
+  fn() {
+    assertEquals(a2, 13884);
+  },
+});
