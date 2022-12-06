@@ -9,15 +9,15 @@ export const assertNever = (o: unknown): never => {
 
 export const zip = <T>(...arrays: T[][]): T[][] => {
   const result: T[][] = [];
-  for(const arr of arrays){
-    for(const [i, element] of arr.entries()) {
-      if(!result[i]) result[i] = [];
+  for (const arr of arrays) {
+    for (const [i, element] of arr.entries()) {
+      if (!result[i]) result[i] = [];
       result[i].push(element);
     }
   }
   return result;
-}
+};
 
 export const transpose = <T>(a: T[][]): T[][] => {
   return zip(...a);
-}
+};
