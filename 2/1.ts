@@ -9,7 +9,7 @@ const directions = [
 
 type Direction = typeof directions[number];
 
-interface Movement {
+export interface Movement {
   direction: Direction;
   n: number;
 }
@@ -22,7 +22,7 @@ interface Position {
 const isDirection = (s: string): s is Direction =>
   (directions as readonly string[]).includes(s);
 
-const decodeMovement = (s: string): Movement => {
+export const decodeMovement = (s: string): Movement => {
   const [direction, nS] = s.split(" ", 2);
   if (!isDirection(direction)) return assertNever(direction);
 

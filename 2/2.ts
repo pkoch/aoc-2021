@@ -1,37 +1,12 @@
 import { assertNever, input_reader } from "../libtapete.ts";
 import "../langExts/Object/thrush.ts";
-
-const directions = [
-  "forward",
-  "down",
-  "up",
-] as const;
-
-type Direction = typeof directions[number];
-
-interface Movement {
-  direction: Direction;
-  n: number;
-}
+import { decodeMovement, Movement } from "./1.ts";
 
 interface Position {
   depth: number;
   horizontal: number;
   aim: number;
 }
-
-const isDirection = (s: string): s is Direction =>
-  (directions as readonly string[]).includes(s);
-
-const decodeMovement = (s: string): Movement => {
-  const [direction, nS] = s.split(" ", 2);
-  if (!isDirection(direction)) return assertNever(direction);
-
-  return {
-    direction,
-    n: +new Number(nS),
-  };
-};
 
 const applyMovement = (pos: Position, move: Movement): Position => {
   switch (move.direction) {
