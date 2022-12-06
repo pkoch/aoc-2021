@@ -21,6 +21,3 @@ export const zip = <T>(...arrays: T[][]): T[][] => {
 export const transpose = <T>(a: T[][]): T[][] => {
   return zip(...a);
 };
-
-export const min = (a: number, b: number): number => a < b ? a : b;
-export const max = (a: number, b: number): number => a > b ? a : b;

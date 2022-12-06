@@ -1,4 +1,4 @@
-import { assertNever, input_reader, max, min } from "../libtapete.ts";
+import { assertNever, input_reader } from "../libtapete.ts";
 import "../langExts/Object/thrush.ts";
 
 export interface Point {
@@ -47,10 +47,10 @@ export const applyLine = (b: Board, l: Line): Board => {
   const ix = Math.sign(dx);
   const iy = Math.sign(dy);
 
-  const minX = min(l.start.x, l.end.x);
-  const minY = min(l.start.y, l.end.y);
-  const maxX = max(l.start.x, l.end.x);
-  const maxY = max(l.start.y, l.end.y);
+  const minX = Math.min(l.start.x, l.end.x);
+  const minY = Math.min(l.start.y, l.end.y);
+  const maxX = Math.max(l.start.x, l.end.x);
+  const maxY = Math.max(l.start.y, l.end.y);
 
   for (
     let x = l.start.x, y = l.start.y;

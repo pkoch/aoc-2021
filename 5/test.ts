@@ -1,5 +1,5 @@
 import { assertEquals } from "https://deno.land/std@0.167.0/testing/asserts.ts";
-import { max, transpose } from "../libtapete.ts";
+import { transpose } from "../libtapete.ts";
 
 import a1, { applyLine, Board, decode, horizontalOrVertical } from "./1.ts";
 import a2 from "./2.ts";
@@ -82,7 +82,9 @@ const paint = (b: Board): string => {
   const coords = Object.keys(b).map((s) =>
     s.split(",").map((n) => +new Number(n))
   );
-  const [maxX, maxY] = transpose(coords).map((l) => l.reduce(max));
+  const [maxX, maxY] = transpose(coords).map((l) =>
+    l.reduce((a, b) => Math.max(a, b))
+  );
 
   const result: number[][] = [];
   for (let y = 0; y <= maxY; y++) {
